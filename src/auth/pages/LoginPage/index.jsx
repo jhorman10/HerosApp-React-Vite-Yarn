@@ -1,10 +1,16 @@
+import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context';
 
 export const LoginPage = () => {
+  const { handleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const onLogin = () => {
-    navigate('/marvel', { replace: true });
+    const lastPath = localStorage.getItem('lastPath') || '/';
+
+    handleLogin('[UserName]');
+    navigate(lastPath, { replace: true });
   };
   return (
     <>
@@ -23,7 +29,7 @@ export const LoginPage = () => {
             placeholder="Password"
             name="password"
           />
-          <Link className="btn btn-outline-info mt-2" to="/register">
+          <Link className="btn btn-outline-info mt-2" to="register">
             Without an account? register here
           </Link>
           <button
